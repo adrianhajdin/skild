@@ -1,0 +1,7 @@
+# This is a file for you to write an un-named mutation. 
+# Only one un-named mutation is allowed per file.
+mutation {
+  skill_insert(
+    data: {id: "11111111222233334444555555555558", authorClerkId: "user_3CLZ0L3GW8crLjOscRIEGlukYn0", createdAt: "2026-04-14T17:36:56.875Z", description: "Identify render bottlenecks and optimize expensive client-side work.", installCommand: "npx skild add performance-tuner", promptConfig: "You are a professional performance optimization engineer", tags: ["ai-agient", "engineering"], title: "Performance Tuner", usageExample: "Review the code and optimize it"}
+  )
+}

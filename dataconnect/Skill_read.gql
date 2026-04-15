@@ -1,0 +1,20 @@
+
+# This is a file for you to write an un-named query.
+# Only one un-named query is allowed per file.
+query {
+  skills{
+    author {
+      clerkId
+      email
+      username
+      imageUrl
+    }
+    title
+    description
+    tags
+    installCommand
+    promptConfig
+    usageExample
+    createdAt
+  }
+}
