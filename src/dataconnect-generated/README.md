@@ -11,6 +11,7 @@ This README will guide you through the process of using the generated JavaScript
   - [*Connecting to the local Emulator*](#connecting-to-the-local-emulator)
 - [**Queries**](#queries)
   - [*GetSkills*](#getskills)
+  - [*GetSkillById*](#getskillbyid)
 - [**Mutations**](#mutations)
   - [*CreateSkill*](#createskill)
 
@@ -188,6 +189,130 @@ console.log(data.skills);
 executeQuery(ref).then((response) => {
   const data = response.data;
   console.log(data.skills);
+});
+```
+
+## GetSkillById
+You can execute the `GetSkillById` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
+```typescript
+getSkillById(vars: GetSkillByIdVariables, options?: ExecuteQueryOptions): QueryPromise<GetSkillByIdData, GetSkillByIdVariables>;
+
+interface GetSkillByIdRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: GetSkillByIdVariables): QueryRef<GetSkillByIdData, GetSkillByIdVariables>;
+}
+export const getSkillByIdRef: GetSkillByIdRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
+```typescript
+getSkillById(dc: DataConnect, vars: GetSkillByIdVariables, options?: ExecuteQueryOptions): QueryPromise<GetSkillByIdData, GetSkillByIdVariables>;
+
+interface GetSkillByIdRef {
+  ...
+  (dc: DataConnect, vars: GetSkillByIdVariables): QueryRef<GetSkillByIdData, GetSkillByIdVariables>;
+}
+export const getSkillByIdRef: GetSkillByIdRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the getSkillByIdRef:
+```typescript
+const name = getSkillByIdRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `GetSkillById` query requires an argument of type `GetSkillByIdVariables`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface GetSkillByIdVariables {
+  id: UUIDString;
+}
+```
+### Return Type
+Recall that executing the `GetSkillById` query returns a `QueryPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `GetSkillByIdData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface GetSkillByIdData {
+  skill?: {
+    id: UUIDString;
+    title: string;
+    description: string;
+    tags: string[];
+    installCommand: string;
+    promptConfig: string;
+    usageExample: string;
+    createdAt: TimestampString;
+    author: {
+      username?: string | null;
+      imageUrl?: string | null;
+      clerkId: string;
+      email: string;
+    } & User_Key;
+  } & Skill_Key;
+}
+```
+### Using `GetSkillById`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, getSkillById, GetSkillByIdVariables } from '@dataconnect/generated';
+
+// The `GetSkillById` query requires an argument of type `GetSkillByIdVariables`:
+const getSkillByIdVars: GetSkillByIdVariables = {
+  id: ..., 
+};
+
+// Call the `getSkillById()` function to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await getSkillById(getSkillByIdVars);
+// Variables can be defined inline as well.
+const { data } = await getSkillById({ id: ..., });
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await getSkillById(dataConnect, getSkillByIdVars);
+
+console.log(data.skill);
+
+// Or, you can use the `Promise` API.
+getSkillById(getSkillByIdVars).then((response) => {
+  const data = response.data;
+  console.log(data.skill);
+});
+```
+
+### Using `GetSkillById`'s `QueryRef` function
+
+```typescript
+import { getDataConnect, executeQuery } from 'firebase/data-connect';
+import { connectorConfig, getSkillByIdRef, GetSkillByIdVariables } from '@dataconnect/generated';
+
+// The `GetSkillById` query requires an argument of type `GetSkillByIdVariables`:
+const getSkillByIdVars: GetSkillByIdVariables = {
+  id: ..., 
+};
+
+// Call the `getSkillByIdRef()` function to get a reference to the query.
+const ref = getSkillByIdRef(getSkillByIdVars);
+// Variables can be defined inline as well.
+const ref = getSkillByIdRef({ id: ..., });
+
+// You can also pass in a `DataConnect` instance to the `QueryRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = getSkillByIdRef(dataConnect, getSkillByIdVars);
+
+// Call `executeQuery()` on the reference to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeQuery(ref);
+
+console.log(data.skill);
+
+// Or, you can use the `Promise` API.
+executeQuery(ref).then((response) => {
+  const data = response.data;
+  console.log(data.skill);
 });
 ```
 

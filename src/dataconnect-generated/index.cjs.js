@@ -41,3 +41,18 @@ exports.getSkills = function getSkills(dcOrVars, varsOrOptions, options) {
   return executeQuery(getSkillsRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
 }
 ;
+
+const getSkillByIdRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'GetSkillById', inputVars);
+}
+getSkillByIdRef.operationName = 'GetSkillById';
+exports.getSkillByIdRef = getSkillByIdRef;
+
+exports.getSkillById = function getSkillById(dcOrVars, varsOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
+  return executeQuery(getSkillByIdRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
+}
+;

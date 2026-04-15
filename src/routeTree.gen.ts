@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SkillsIndexRouteImport } from './routes/skills/index'
 import { Route as SkillsNewRouteImport } from './routes/skills/new'
+import { Route as SkillsSkillIdRouteImport } from './routes/skills/$skillId'
 import { Route as _authSignUpSplatRouteImport } from './routes/__auth/sign-up.$'
 import { Route as _authSignInSplatRouteImport } from './routes/__auth/sign-in.$'
 
@@ -30,6 +31,11 @@ const SkillsNewRoute = SkillsNewRouteImport.update({
   path: '/skills/new',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SkillsSkillIdRoute = SkillsSkillIdRouteImport.update({
+  id: '/skills/$skillId',
+  path: '/skills/$skillId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const _authSignUpSplatRoute = _authSignUpSplatRouteImport.update({
   id: '/__auth/sign-up/$',
   path: '/sign-up/$',
@@ -43,6 +49,7 @@ const _authSignInSplatRoute = _authSignInSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/skills/$skillId': typeof SkillsSkillIdRoute
   '/skills/new': typeof SkillsNewRoute
   '/skills/': typeof SkillsIndexRoute
   '/sign-in/$': typeof _authSignInSplatRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/skills/$skillId': typeof SkillsSkillIdRoute
   '/skills/new': typeof SkillsNewRoute
   '/skills': typeof SkillsIndexRoute
   '/sign-in/$': typeof _authSignInSplatRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/skills/$skillId': typeof SkillsSkillIdRoute
   '/skills/new': typeof SkillsNewRoute
   '/skills/': typeof SkillsIndexRoute
   '/__auth/sign-in/$': typeof _authSignInSplatRoute
@@ -65,12 +74,25 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/skills/new' | '/skills/' | '/sign-in/$' | '/sign-up/$'
+  fullPaths:
+    | '/'
+    | '/skills/$skillId'
+    | '/skills/new'
+    | '/skills/'
+    | '/sign-in/$'
+    | '/sign-up/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/skills/new' | '/skills' | '/sign-in/$' | '/sign-up/$'
+  to:
+    | '/'
+    | '/skills/$skillId'
+    | '/skills/new'
+    | '/skills'
+    | '/sign-in/$'
+    | '/sign-up/$'
   id:
     | '__root__'
     | '/'
+    | '/skills/$skillId'
     | '/skills/new'
     | '/skills/'
     | '/__auth/sign-in/$'
@@ -79,6 +101,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SkillsSkillIdRoute: typeof SkillsSkillIdRoute
   SkillsNewRoute: typeof SkillsNewRoute
   SkillsIndexRoute: typeof SkillsIndexRoute
   _authSignInSplatRoute: typeof _authSignInSplatRoute
@@ -108,6 +131,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SkillsNewRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/skills/$skillId': {
+      id: '/skills/$skillId'
+      path: '/skills/$skillId'
+      fullPath: '/skills/$skillId'
+      preLoaderRoute: typeof SkillsSkillIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/__auth/sign-up/$': {
       id: '/__auth/sign-up/$'
       path: '/sign-up/$'
@@ -127,6 +157,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SkillsSkillIdRoute: SkillsSkillIdRoute,
   SkillsNewRoute: SkillsNewRoute,
   SkillsIndexRoute: SkillsIndexRoute,
   _authSignInSplatRoute: _authSignInSplatRoute,

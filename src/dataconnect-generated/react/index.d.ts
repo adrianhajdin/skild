@@ -1,4 +1,4 @@
-import { CreateSkillData, CreateSkillVariables, GetSkillsData, GetSkillsVariables } from '../';
+import { CreateSkillData, CreateSkillVariables, GetSkillsData, GetSkillsVariables, GetSkillByIdData, GetSkillByIdVariables } from '../';
 import { UseDataConnectQueryResult, useDataConnectQueryOptions, UseDataConnectMutationResult, useDataConnectMutationOptions} from '@tanstack-query-firebase/react/data-connect';
 import { UseQueryResult, UseMutationResult} from '@tanstack/react-query';
 import { DataConnect } from 'firebase/data-connect';
@@ -10,3 +10,6 @@ export function useCreateSkill(dc: DataConnect, options?: useDataConnectMutation
 
 export function useGetSkills(vars?: GetSkillsVariables, options?: useDataConnectQueryOptions<GetSkillsData>): UseDataConnectQueryResult<GetSkillsData, GetSkillsVariables>;
 export function useGetSkills(dc: DataConnect, vars?: GetSkillsVariables, options?: useDataConnectQueryOptions<GetSkillsData>): UseDataConnectQueryResult<GetSkillsData, GetSkillsVariables>;
+
+export function useGetSkillById(vars: GetSkillByIdVariables, options?: useDataConnectQueryOptions<GetSkillByIdData>): UseDataConnectQueryResult<GetSkillByIdData, GetSkillByIdVariables>;
+export function useGetSkillById(dc: DataConnect, vars: GetSkillByIdVariables, options?: useDataConnectQueryOptions<GetSkillByIdData>): UseDataConnectQueryResult<GetSkillByIdData, GetSkillByIdVariables>;

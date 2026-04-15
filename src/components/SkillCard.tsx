@@ -14,6 +14,7 @@ import type { GetSkillsData } from "#/dataconnect-generated";
 type SkillCardProps = GetSkillsData["skills"][number];
 
 const SkillCard = ({
+	id,
 	createdAt,
 	description,
 	installCommand,
@@ -44,7 +45,8 @@ const SkillCard = ({
 	return (
 		<article className="skill-card">
 			<Link
-				to="/skills"
+				to="/skills/$skillId"
+				params={{ skillId: id }}
 				tabIndex={-1}
 				aria-label={`Open ${title}`}
 				className="overlay"
@@ -83,7 +85,11 @@ const SkillCard = ({
 				</div>
 
 				<div className="summary">
-					<Link to="/skills" className="title-link">
+					<Link
+						to="/skills/$skillId"
+						params={{ skillId: id }}
+						className="title-link"
+					>
 						<h3>{title}</h3>
 					</Link>
 
@@ -120,7 +126,8 @@ const SkillCard = ({
 
 					<div className="actions">
 						<Link
-							to="/skills"
+							to="/skills/$skillId"
+							params={{ skillId: id }}
 							className="open"
 							title={`Open ${title}`}
 							onClick={() =>

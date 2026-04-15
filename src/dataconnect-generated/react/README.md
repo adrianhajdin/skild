@@ -18,6 +18,7 @@ You can also follow the instructions from the [Data Connect documentation](https
   - [*Connecting to the local Emulator*](#connecting-to-the-local-emulator)
 - [**Queries**](#queries)
   - [*GetSkills*](#getskills)
+  - [*GetSkillById*](#getskillbyid)
 - [**Mutations**](#mutations)
   - [*CreateSkill*](#createskill)
 
@@ -211,6 +212,103 @@ export default function GetSkillsComponent() {
   // If the Query is successful, you can access the data returned using the `UseQueryResult.data` field.
   if (query.isSuccess) {
     console.log(query.data.skills);
+  }
+  return <div>Query execution {query.isSuccess ? 'successful' : 'failed'}!</div>;
+}
+```
+
+## GetSkillById
+You can execute the `GetSkillById` Query using the following Query hook function, which is defined in [dataconnect-generated/react/index.d.ts](./index.d.ts):
+
+```javascript
+useGetSkillById(dc: DataConnect, vars: GetSkillByIdVariables, options?: useDataConnectQueryOptions<GetSkillByIdData>): UseDataConnectQueryResult<GetSkillByIdData, GetSkillByIdVariables>;
+```
+You can also pass in a `DataConnect` instance to the Query hook function.
+```javascript
+useGetSkillById(vars: GetSkillByIdVariables, options?: useDataConnectQueryOptions<GetSkillByIdData>): UseDataConnectQueryResult<GetSkillByIdData, GetSkillByIdVariables>;
+```
+
+### Variables
+The `GetSkillById` Query requires an argument of type `GetSkillByIdVariables`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+
+```javascript
+export interface GetSkillByIdVariables {
+  id: UUIDString;
+}
+```
+### Return Type
+Recall that calling the `GetSkillById` Query hook function returns a `UseQueryResult` object. This object holds the state of your Query, including whether the Query is loading, has completed, or has succeeded/failed, and any data returned by the Query, among other things.
+
+To check the status of a Query, use the `UseQueryResult.status` field. You can also check for pending / success / error status using the `UseQueryResult.isPending`, `UseQueryResult.isSuccess`, and `UseQueryResult.isError` fields.
+
+To access the data returned by a Query, use the `UseQueryResult.data` field. The data for the `GetSkillById` Query is of type `GetSkillByIdData`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+```javascript
+export interface GetSkillByIdData {
+  skill?: {
+    id: UUIDString;
+    title: string;
+    description: string;
+    tags: string[];
+    installCommand: string;
+    promptConfig: string;
+    usageExample: string;
+    createdAt: TimestampString;
+    author: {
+      username?: string | null;
+      imageUrl?: string | null;
+      clerkId: string;
+      email: string;
+    } & User_Key;
+  } & Skill_Key;
+}
+```
+
+To learn more about the `UseQueryResult` object, see the [TanStack React Query documentation](https://tanstack.com/query/v5/docs/framework/react/reference/useQuery).
+
+### Using `GetSkillById`'s Query hook function
+
+```javascript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, GetSkillByIdVariables } from '@dataconnect/generated';
+import { useGetSkillById } from '@dataconnect/generated/react'
+
+export default function GetSkillByIdComponent() {
+  // The `useGetSkillById` Query hook requires an argument of type `GetSkillByIdVariables`:
+  const getSkillByIdVars: GetSkillByIdVariables = {
+    id: ..., 
+  };
+
+  // You don't have to do anything to "execute" the Query.
+  // Call the Query hook function to get a `UseQueryResult` object which holds the state of your Query.
+  const query = useGetSkillById(getSkillByIdVars);
+  // Variables can be defined inline as well.
+  const query = useGetSkillById({ id: ..., });
+
+  // You can also pass in a `DataConnect` instance to the Query hook function.
+  const dataConnect = getDataConnect(connectorConfig);
+  const query = useGetSkillById(dataConnect, getSkillByIdVars);
+
+  // You can also pass in a `useDataConnectQueryOptions` object to the Query hook function.
+  const options = { staleTime: 5 * 1000 };
+  const query = useGetSkillById(getSkillByIdVars, options);
+
+  // You can also pass both a `DataConnect` instance and a `useDataConnectQueryOptions` object.
+  const dataConnect = getDataConnect(connectorConfig);
+  const options = { staleTime: 5 * 1000 };
+  const query = useGetSkillById(dataConnect, getSkillByIdVars, options);
+
+  // Then, you can render your component dynamically based on the status of the Query.
+  if (query.isPending) {
+    return <div>Loading...</div>;
+  }
+
+  if (query.isError) {
+    return <div>Error: {query.error.message}</div>;
+  }
+
+  // If the Query is successful, you can access the data returned using the `UseQueryResult.data` field.
+  if (query.isSuccess) {
+    console.log(query.data.skill);
   }
   return <div>Query execution {query.isSuccess ? 'successful' : 'failed'}!</div>;
 }
