@@ -95,6 +95,7 @@ The `GetSkills` query has an optional argument of type `GetSkillsVariables`, whi
 export interface GetSkillsVariables {
   searchTerm?: string | null;
   limit?: number | null;
+  offset?: number | null;
 }
 ```
 ### Return Type
@@ -129,13 +130,14 @@ import { connectorConfig, getSkills, GetSkillsVariables } from '@dataconnect/gen
 const getSkillsVars: GetSkillsVariables = {
   searchTerm: ..., // optional
   limit: ..., // optional
+  offset: ..., // optional
 };
 
 // Call the `getSkills()` function to execute the query.
 // You can use the `await` keyword to wait for the promise to resolve.
 const { data } = await getSkills(getSkillsVars);
 // Variables can be defined inline as well.
-const { data } = await getSkills({ searchTerm: ..., limit: ..., });
+const { data } = await getSkills({ searchTerm: ..., limit: ..., offset: ..., });
 // Since all variables are optional for this query, you can omit the `GetSkillsVariables` argument.
 const { data } = await getSkills();
 
@@ -162,12 +164,13 @@ import { connectorConfig, getSkillsRef, GetSkillsVariables } from '@dataconnect/
 const getSkillsVars: GetSkillsVariables = {
   searchTerm: ..., // optional
   limit: ..., // optional
+  offset: ..., // optional
 };
 
 // Call the `getSkillsRef()` function to get a reference to the query.
 const ref = getSkillsRef(getSkillsVars);
 // Variables can be defined inline as well.
-const ref = getSkillsRef({ searchTerm: ..., limit: ..., });
+const ref = getSkillsRef({ searchTerm: ..., limit: ..., offset: ..., });
 // Since all variables are optional for this query, you can omit the `GetSkillsVariables` argument.
 const ref = getSkillsRef();
 

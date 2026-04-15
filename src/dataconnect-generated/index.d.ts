@@ -45,6 +45,7 @@ export interface GetSkillsData {
 export interface GetSkillsVariables {
   searchTerm?: string | null;
   limit?: number | null;
+  offset?: number | null;
 }
 
 export interface Skill_Key {

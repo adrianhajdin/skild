@@ -129,6 +129,7 @@ The `GetSkills` Query has an optional argument of type `GetSkillsVariables`, whi
 export interface GetSkillsVariables {
   searchTerm?: string | null;
   limit?: number | null;
+  offset?: number | null;
 }
 ```
 ### Return Type
@@ -170,13 +171,14 @@ export default function GetSkillsComponent() {
   const getSkillsVars: GetSkillsVariables = {
     searchTerm: ..., // optional
     limit: ..., // optional
+    offset: ..., // optional
   };
 
   // You don't have to do anything to "execute" the Query.
   // Call the Query hook function to get a `UseQueryResult` object which holds the state of your Query.
   const query = useGetSkills(getSkillsVars);
   // Variables can be defined inline as well.
-  const query = useGetSkills({ searchTerm: ..., limit: ..., });
+  const query = useGetSkills({ searchTerm: ..., limit: ..., offset: ..., });
   // Since all variables are optional for this Query, you can omit the `GetSkillsVariables` argument.
   // (as long as you don't want to provide any `options`!)
   const query = useGetSkills();
