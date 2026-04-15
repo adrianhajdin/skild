@@ -12,8 +12,10 @@ For each operation, there is a wrapper hook that can be used to call the operati
 
 Here are all of the hooks that get generated:
 ```ts
-import { useGetSkills } from '@dataconnect/generated/react';
+import { useCreateSkill, useGetSkills } from '@dataconnect/generated/react';
 // The types of these hooks are available in react/index.d.ts
+
+const { data, isPending, isSuccess, isError, error } = useCreateSkill(createSkillVars);
 
 const { data, isPending, isSuccess, isError, error } = useGetSkills(getSkillsVars);
 
@@ -54,8 +56,11 @@ If a user is not using a supported framework, they can use the generated SDK dir
 Here's an example of how to use it with the first 5 operations:
 
 ```js
-import { getSkills } from '@dataconnect/generated';
+import { createSkill, getSkills } from '@dataconnect/generated';
 
+
+// Operation CreateSkill:  For variables, look at type CreateSkillVars in ../index.d.ts
+const { data } = await CreateSkill(dataConnect, createSkillVars);
 
 // Operation GetSkills:  For variables, look at type GetSkillsVars in ../index.d.ts
 const { data } = await GetSkills(dataConnect, getSkillsVars);

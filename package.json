@@ -18,8 +18,10 @@
     "@clerk/clerk-react": "^5.61.3",
     "@clerk/tanstack-react-start": "^1.0.13",
     "@dataconnect/generated": "file:src/dataconnect-generated",
+    "@hookform/resolvers": "^5.2.2",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-devtools": "latest",
+    "@tanstack/react-form": "^1.29.0",
     "@tanstack/react-query": "latest",
     "@tanstack/react-query-devtools": "latest",
     "@tanstack/react-router": "latest",
@@ -31,11 +33,15 @@
     "clsx": "^2.1.1",
     "lucide-react": "^0.577.0",
     "posthog-js": "^1.368.2",
+    "radix-ui": "^1.4.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-hook-form": "^7.72.1",
+    "sonner": "^2.0.7",
     "tailwind-merge": "^3.0.2",
     "tailwindcss": "^4.1.18",
-    "tw-animate-css": "^1.3.6"
+    "tw-animate-css": "^1.3.6",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.5",

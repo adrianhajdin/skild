@@ -320,7 +320,7 @@
       @apply mb-4 flex flex-col gap-2;
 
       h1 {
-        @apply text-3xl font-bold tracking-tight text-white md:text-4xl;
+        @apply text-3xl font-bold tracking-tight dark:text-white text-black md:text-4xl;
       }
 
       p {
@@ -602,7 +602,7 @@
   }
 
   .form-label {
-    @apply block! w-fit! text-sm! font-bold! leading-normal! uppercase! tracking-wider! text-white!;
+    @apply block! w-fit! text-sm! font-bold! leading-normal! uppercase! tracking-wider! dark:text-white! text-black!;
   }
 
   .form-description {
@@ -614,15 +614,11 @@
   }
 
   .input-field {
-    @apply h-auto! min-h-0! w-full! rounded-none! border! border-border-subtle! bg-surface! px-4! py-4! text-white! shadow-none! outline-none! transition-none! placeholder:text-text-muted! focus-visible:border-border-subtle! focus-visible:ring-0! focus-visible:ring-transparent! ring-0! aria-invalid:ring-0! dark:bg-surface!;
+    @apply h-auto! min-h-0! w-full! rounded-none! border! border-border-subtle! bg-surface! p-4! shadow-none! outline-none! transition-none! placeholder:text-text-muted! focus-visible:border-border-subtle! focus-visible:ring-0! focus-visible:ring-transparent! ring-0! aria-invalid:ring-0! dark:bg-surface! dark:text-white! text-black!;
   }
 
   .input-field-textarea {
     @apply resize-none!;
-  }
-
-  .input-field-lg {
-    @apply text-base! md:text-base!;
   }
 
   .input-field-sm {

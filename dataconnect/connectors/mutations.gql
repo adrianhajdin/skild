@@ -1,0 +1,21 @@
+mutation CreateSkill(
+	$authorClerkId: String!,
+	$title: String!,
+	$description: String!,
+	$tags: [String!]!,
+	$installCommand: String!,
+	$promptConfig: String!,
+	$usageExample: String!
+) @auth(level: PUBLIC insecureReason: "Clerk auth is handled on the frontend") {
+	skill_insert(
+		data: {
+			authorClerkId: $authorClerkId
+			title: $title
+			description: $description
+			tags: $tags
+			installCommand: $installCommand
+			promptConfig: $promptConfig
+			usageExample: $usageExample
+		}
+	)
+}

@@ -12,6 +12,7 @@ This README will guide you through the process of using the generated JavaScript
 - [**Queries**](#queries)
   - [*GetSkills*](#getskills)
 - [**Mutations**](#mutations)
+  - [*CreateSkill*](#createskill)
 
 # Accessing the connector
 A connector is a collection of Queries and Mutations. One SDK is generated for each connector - this SDK is generated for the connector `example`. You can find more information about connectors in the [Data Connect documentation](https://firebase.google.com/docs/data-connect#how-does).
@@ -189,7 +190,143 @@ executeQuery(ref).then((response) => {
 
 # Mutations
 
-No mutations were generated for the `example` connector.
+There are two ways to execute a Data Connect Mutation using the generated Web SDK:
+- Using a Mutation Reference function, which returns a `MutationRef`
+  - The `MutationRef` can be used as an argument to `executeMutation()`, which will execute the Mutation and return a `MutationPromise`
+- Using an action shortcut function, which returns a `MutationPromise`
+  - Calling the action shortcut function will execute the Mutation and return a `MutationPromise`
 
-If you want to learn more about how to use mutations in Data Connect, you can follow the examples from the [Data Connect documentation](https://firebase.google.com/docs/data-connect/web-sdk#using-mutations).
+The following is true for both the action shortcut function and the `MutationRef` function:
+- The `MutationPromise` returned will resolve to the result of the Mutation once it has finished executing
+- If the Mutation accepts arguments, both the action shortcut function and the `MutationRef` function accept a single argument: an object that contains all the required variables (and the optional variables) for the Mutation
+- Both functions can be called with or without passing in a `DataConnect` instance as an argument. If no `DataConnect` argument is passed in, then the generated SDK will call `getDataConnect(connectorConfig)` behind the scenes for you.
+
+Below are examples of how to use the `example` connector's generated functions to execute each mutation. You can also follow the examples from the [Data Connect documentation](https://firebase.google.com/docs/data-connect/web-sdk#using-mutations).
+
+## CreateSkill
+You can execute the `CreateSkill` mutation using the following action shortcut function, or by calling `executeMutation()` after calling the following `MutationRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
+```typescript
+createSkill(vars: CreateSkillVariables): MutationPromise<CreateSkillData, CreateSkillVariables>;
+
+interface CreateSkillRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: CreateSkillVariables): MutationRef<CreateSkillData, CreateSkillVariables>;
+}
+export const createSkillRef: CreateSkillRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `MutationRef` function.
+```typescript
+createSkill(dc: DataConnect, vars: CreateSkillVariables): MutationPromise<CreateSkillData, CreateSkillVariables>;
+
+interface CreateSkillRef {
+  ...
+  (dc: DataConnect, vars: CreateSkillVariables): MutationRef<CreateSkillData, CreateSkillVariables>;
+}
+export const createSkillRef: CreateSkillRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the createSkillRef:
+```typescript
+const name = createSkillRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `CreateSkill` mutation requires an argument of type `CreateSkillVariables`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface CreateSkillVariables {
+  authorClerkId: string;
+  title: string;
+  description: string;
+  tags: string[];
+  installCommand: string;
+  promptConfig: string;
+  usageExample: string;
+}
+```
+### Return Type
+Recall that executing the `CreateSkill` mutation returns a `MutationPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `CreateSkillData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface CreateSkillData {
+  skill_insert: Skill_Key;
+}
+```
+### Using `CreateSkill`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, createSkill, CreateSkillVariables } from '@dataconnect/generated';
+
+// The `CreateSkill` mutation requires an argument of type `CreateSkillVariables`:
+const createSkillVars: CreateSkillVariables = {
+  authorClerkId: ..., 
+  title: ..., 
+  description: ..., 
+  tags: ..., 
+  installCommand: ..., 
+  promptConfig: ..., 
+  usageExample: ..., 
+};
+
+// Call the `createSkill()` function to execute the mutation.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await createSkill(createSkillVars);
+// Variables can be defined inline as well.
+const { data } = await createSkill({ authorClerkId: ..., title: ..., description: ..., tags: ..., installCommand: ..., promptConfig: ..., usageExample: ..., });
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await createSkill(dataConnect, createSkillVars);
+
+console.log(data.skill_insert);
+
+// Or, you can use the `Promise` API.
+createSkill(createSkillVars).then((response) => {
+  const data = response.data;
+  console.log(data.skill_insert);
+});
+```
+
+### Using `CreateSkill`'s `MutationRef` function
+
+```typescript
+import { getDataConnect, executeMutation } from 'firebase/data-connect';
+import { connectorConfig, createSkillRef, CreateSkillVariables } from '@dataconnect/generated';
+
+// The `CreateSkill` mutation requires an argument of type `CreateSkillVariables`:
+const createSkillVars: CreateSkillVariables = {
+  authorClerkId: ..., 
+  title: ..., 
+  description: ..., 
+  tags: ..., 
+  installCommand: ..., 
+  promptConfig: ..., 
+  usageExample: ..., 
+};
+
+// Call the `createSkillRef()` function to get a reference to the mutation.
+const ref = createSkillRef(createSkillVars);
+// Variables can be defined inline as well.
+const ref = createSkillRef({ authorClerkId: ..., title: ..., description: ..., tags: ..., installCommand: ..., promptConfig: ..., usageExample: ..., });
+
+// You can also pass in a `DataConnect` instance to the `MutationRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = createSkillRef(dataConnect, createSkillVars);
+
+// Call `executeMutation()` on the reference to execute the mutation.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeMutation(ref);
+
+console.log(data.skill_insert);
+
+// Or, you can use the `Promise` API.
+executeMutation(ref).then((response) => {
+  const data = response.data;
+  console.log(data.skill_insert);
+});
+```
 

@@ -9,6 +9,7 @@ import {
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { PostHogProvider, usePostHog } from "posthog-js/react";
 import { useEffect } from "react";
+import { Toaster } from "sonner";
 import Crosshair from "#/components/Crosshair";
 import Navbar from "#/components/Navbar";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
@@ -54,9 +55,10 @@ function PostHogUserIdentifier() {
 	const posthog = usePostHog();
 
 	useEffect(() => {
-		if (isSignedIn && user) {
+		const hasAnalyticsConsent = posthog.has_opted_in_capturing();
+
+		if (isSignedIn && user && hasAnalyticsConsent) {
 			posthog.identify(user.id, {
-				email: user.primaryEmailAddress?.emailAddress,
 				name: user.fullName,
 			});
 		} else if (isSignedIn === false) {
@@ -115,6 +117,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 								TanStackQueryDevtools,
 							]}
 						/>
+						<Toaster />
 					</ClerkProvider>
 				</PostHogProvider>
 				<Scripts />

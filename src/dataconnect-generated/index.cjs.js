@@ -1,4 +1,4 @@
-const { queryRef, executeQuery, validateArgsWithOptions, validateArgs, makeMemoryCacheProvider } = require('firebase/data-connect');
+const { queryRef, executeQuery, validateArgsWithOptions, mutationRef, executeMutation, validateArgs, makeMemoryCacheProvider } = require('firebase/data-connect');
 
 const connectorConfig = {
   connector: 'example',
@@ -12,6 +12,20 @@ const dataConnectSettings = {
   }
 };
 exports.dataConnectSettings = dataConnectSettings;
+
+const createSkillRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'CreateSkill', inputVars);
+}
+createSkillRef.operationName = 'CreateSkill';
+exports.createSkillRef = createSkillRef;
+
+exports.createSkill = function createSkill(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(createSkillRef(dcInstance, inputVars));
+}
+;
 
 const getSkillsRef = (dcOrVars, vars) => {
   const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars);
